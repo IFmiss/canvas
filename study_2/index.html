@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body {
+			background-color:black;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="280" height="280" ></canvas>
+</body>
+<script>
+	// 返回角度转换弧度之后的值
+	function degToRad(degree) {
+		var factor = Math.PI / 180;
+		return degree * factor;
+	}
+
+	var strokeColor = '#31AEFF',
+		strokeColorH = '#F31C7B',
+		strokeColorM = '#D4FD3F',
+		strokeColorS = '#27E8F5',
+		lineWidth = 8,
+		shadowBlur = 15,
+		fillSpace = 8,
+		shadowColor = '#00ffff';
+
+	var canvas = document.getElementById ('canvas')
+	var ctx = canvas.getContext('2d')
+	ctx.strokeStyle = strokeColor
+	ctx.lineWidth = lineWidth
+	ctx.shadowBlur = shadowBlur
+	ctx.shadowColor = shadowColor
+
+	function renderTime () {
+		requestAnimationFrame( renderTime )
+		var canvasW = canvas.width;
+		var canvasH = canvas.height;
+		var now = new Date();
+		var today = now.toDateString();
+		var time = now.toLocaleTimeString();
+		var hrs = now.getHours();
+		var min = now.getMinutes();
+		var sec = now.getSeconds();
+		var mil = now.getMilliseconds();
+		var smoothsec = sec + (mil / 1000);
+		var smoothmin = min + (smoothsec / 60);
+
+		// 背景
+		gradient = ctx.createRadialGradient(canvasW / 2, canvasW / 2, 0, canvasW / 2, canvasW / 2, canvasW / 5 * 3);
+		gradient.addColorStop(0, "#03303a");
+		gradient.addColorStop(1, "black");
+		ctx.fillStyle = gradient;
+		ctx.fillRect(0, 0, canvasW, canvasH);
+
+		//Hours
+		ctx.beginPath();
+		ctx.arc(canvasW / 2, canvasH / 2, canvasW / 2 - lineWidth * 2, degToRad(270), degToRad((hrs * 30) - 90));
+		ctx.strokeStyle = strokeColorH
+    	ctx.stroke();
+
+    	// min
+    	ctx.beginPath();
+		ctx.arc(canvasW / 2, canvasH / 2, canvasW / 2 - (fillSpace * 2) - lineWidth * 3, degToRad(270), degToRad((smoothmin * 6) - 90));
+		ctx.strokeStyle = strokeColorM
+    	ctx.stroke();
+
+    	// sec
+    	ctx.beginPath();
+		ctx.arc(canvasW / 2, canvasH / 2, canvasW / 2 - (fillSpace * 4) - lineWidth * 4, degToRad(270), degToRad((smoothsec * 6) - 90));
+		ctx.strokeStyle = strokeColorS
+    	ctx.stroke();
+		
+		//Date
+		ctx.font = "18px Helvetica";
+		ctx.fillStyle = strokeColor;
+		ctx.textAlign="center";
+		ctx.fillText(today, canvasW / 2, canvasH / 2);
+		//Time
+		ctx.font = "14px Helvetica Bold";
+		ctx.fillStyle = strokeColor;
+		ctx.textAlign="center";
+		ctx.fillText(time , canvasW / 2, canvasH / 2 + 30);
+	}
+
+renderTime()
+</script>
+</html>
