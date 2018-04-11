@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	canvas{
+		cursor: crosshair;
+	}
+	body,html{
+		width: 100%;
+		height: 100%;
+		margin: 0px;
+		overflow: hidden;
+		background-color: #F0F0F0;
+	}
+
+</style>
+<body>
+	<canvas id="canvas"></canvas>
+</body>
+
+<script>
+	var position = {
+		x: 0,
+		y: window.innerHeight / 2
+	}
+	var counter = 0,
+		minFontSize = 3,
+		angleDistortion = 0,
+		letters = '未曾遗忘的青春',
+		canvas = document.getElementById('canvas'),
+		ctx = canvas.getContext('2d'),
+		mouse = {
+			x: 0,
+			y: 0,
+			down: false
+		};
+
+	function init () {
+		canvas.width = window.innerWidth
+		canvas.height = window.innerHeight
+	}
+
+	function mouseMove (event) {
+		mouse.x = event.pageX
+		mouse.y = event.pageY
+		draw()
+	}
+
+	function draw () {
+		
+	}
+</script>
+</html>
